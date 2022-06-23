@@ -1,0 +1,167 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+table{
+    text-align: center;
+}
+
+input:focus{
+    outline: none !important;
+}
+
+
+.tab-container{
+    width: 15%;
+    height: 100%;
+    border: 1px solid gainsboro;
+}
+.tab-container button{
+    width: 100%;
+    padding: 10px;
+    border : none;
+    background-color: transparent;
+    color: gainsboro;
+}
+
+.tab-container button:focus{
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.tab-active{
+    color: #0d6efd !important;
+    font-weight: bold !important;
+}
+
+.edit-container{
+    width: 85%;
+    border: 1px solid gainsboro;
+    border-left: 0;
+}
+
+
+.img-container{   
+    width: 100%;
+    height: 400px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.img-box{
+    width: 49%;
+    height: 100%;
+}
+
+.img-box img{
+    border: 1px solid gainsboro;
+}
+
+.input-container{
+    width: 49%;
+    height: 100%;
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    border: 1px solid gainsboro;
+    
+}
+
+.input-wrap{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    height: 75%;
+    justify-content: center;
+}
+
+.input-box{
+    width: 50%;
+    padding: 10px;
+}
+
+.input-box select{
+    width: 180px;
+}
+
+.input-box input{
+    height: 26px;
+}
+
+
+.button-box{
+    height: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 10px;
+}
+.button-box button{
+    border: 0;
+    padding: 10px;
+    border-radius: 4px;
+    background-color:#0d6efd;
+    color: white;
+}
+
+.basic-button{
+    border: 1px solid gainsboro;
+    padding: 3px;
+    border-radius: 4px;
+    background-color:white;
+    color: black;
+}
+
+
+.search-result{
+    width: 100%;
+    height: 200px;
+    border: 1px solid gainsboro;
+    overflow-y:scroll;
+}
+
+.search-result th{
+    position: sticky;
+    top: 0;
+    background-color: #0d6efd;
+    color: white;
+    
+}
+
+.search-box{
+    width: 100%;
+   
+}
+
+.stock-result{
+    width: 100%;
+    height: 200px;
+    border: 1px solid gainsboro;
+    overflow-y:scroll;
+}
+
+.stock-box{
+    width: 100%;
+}
+
+.stock-box th{
+    position: sticky;
+    top: 0;
+    background-color: #0d6efd;
+    color: white;
+    
+}
+
+.input-box input::-webkit-inner-spin-button, 
+.input-box input::-webkit-outer-spin-button {  
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+
+

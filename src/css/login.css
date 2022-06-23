@@ -1,0 +1,22 @@
+.login-container{
+    width: 500px;
+    height: 400px;
+    margin: 0 auto;
+    margin-top: 20px;
+    border: 1px solid gainsboro;
+    border-radius: 4px;
+}
+
+.login-container div{
+    padding: 10px;
+
+}
+input[type=password] {
+    font-family: "나눔스퀘어 아닐때 쓸 글꼴";
+
+}
+
+
+input[type=password]::placeholder{
+    font-family: 'ONE-Mobile-POP';
+}
