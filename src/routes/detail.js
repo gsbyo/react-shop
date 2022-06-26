@@ -12,10 +12,30 @@ function Product() {
     let [ product, setProduct ] = useState();
     let [ stock, setStock ] = useState([]); // 재고 
 
-    let [option_1, setOption_1] = useState();
-    let [option_2, setOption_2] = useState();
+    let [option_1, setOption_1] = useState([]);
+    let [option_2, setOption_2] = useState([]);
 
-    let [count, setCount] = useState('')
+    let [selectOption, setSelectOption] = useState();
+    let [selectOption2, setSelectOption2] = useState();
+
+    let [count, setCount] = useState(1);
+
+    
+    useEffect( () => {
+      let arr = [];
+       stock.forEach( (s) => {
+            if(s.option_1 == selectOption) arr.push(s.option_2);
+        })
+
+       setOption_2(arr);
+       setSelectOption2(arr[0]);
+
+    }, [selectOption])
+
+    useEffect( () => {
+        setCount(1);
+    },[selectOption2])
+
     
     useEffect( () => {
         axios.get('http://localhost:8080/detail/product/' + id).then(( result ) => {
@@ -28,8 +48,15 @@ function Product() {
              console.log(result.data);
              setStock(result.data);
 
-             setOption_1(result.data[0].option_1);
-             setOption_2(result.data[0].option_2);
+             let set = new Set;
+
+             result.data.forEach( (s => {
+                set.add(s.option_1);
+             }))
+             let arr = Array.from(set);
+        
+             setOption_1(arr);
+             setSelectOption(arr[0]);
         }).catch( (err) => {
             console.log(err)
         })
@@ -48,8 +75,8 @@ function Product() {
                     id : id,
                     name : product.name,
                     price : product.price,
-                    option_1 : option_1,
-                    option_2 : option_2,
+                    option_1 : selectOption,
+                    option_2 : selectOption2,
                     count : count,
                     discount : product.discount,
                     img : product.img,
@@ -86,24 +113,31 @@ function Product() {
 
     
       const checkCount =  async (e) => {
+
+          if(e.target.value == '0') return setCount(1);
   
-          const regex = new RegExp("/^[0-9]+$/");
+          let check = new RegExp(/[^0-9]/g);
 
           let limitNumber;
 
-          if(!regex.test(e.target.value)){
+          if(!check.test(e.target.value)){
               await stock.forEach( (s) => {
-                  if( (s.option_1 == option_1 && s.option_2 == option_2 ) 
-                     || ( s.option_1 == option_1 && s.option_2 == 'none') ) {
+                  if( (s.option_1 == selectOption && s.option_2 == selectOption2 ) 
+                     || ( s.option_1 == selectOption && s.option_2 == 'none') ) {
                             limitNumber = s.stock;
                   }
                   if(e.target.value < limitNumber){
                     return setCount(e.target.value)
-                  }
+                  }else{
                     return setCount(limitNumber);
+                  }
               })
+          }else{
+            setCount('');
           }
+
       }
+
 
     return (
         
@@ -140,27 +174,32 @@ function Product() {
                                         <div className='option-container'>
                                         <div style={{width:'100%',padding:10, borderBottom:'1px solid gainsboro'}}>
                                         <p>Size</p>
-                                        <select value={option_1} defaultValue="red" onChange={ (e) => { setOption_1(e.target.value) }} style={{width:100}}>
+                                        <select value={selectOption} onChange={ (e) => { setSelectOption(e.target.value) }} style={{width:100}}>
                                             {
-                                                stock.map( (s, i) => {
-                                                    return <option value={s.option_1}>{s.option_1}</option>
+                                                option_1  ?
+                                                option_1.map( (s, i) => {
+                                                    return <option value={s}>{s}</option>
                                                 })
+                                                : null
                                             }
                                         </select>
                                         </div>           
                                         <div style={{width:'100%',padding:10, borderBottom:'1px solid gainsboro'}}>
                                         <p>Color</p>
-                                        <select value={option_2} defaultValue="large" onChange={ (e) => { setOption_2(e.target.value) }} style={{width:100}}>
+                                        <select value={selectOption2} onChange={ (e) => { setSelectOption2(e.target.value) }} style={{width:100}}>
                                             {
-                                                stock.map( (s, i) => {
-                                                    return <option value={s.option_2}>{s.option_2}</option> 
-                                                })
+                                               option_2 != null ?
+                                               option_2.map( (o => {
+                                                return <option value={o}>{o}</option> 
+                                               }))
+                                               : null
+                                 
                                             }
                                         </select>
                                         </div>
                                         <div style={{width:'100%',padding:10, borderBottom:'1px solid gainsboro'}}>
                                         <p>Count</p>
-                                        <input className='count-input' type='number' id='number' value={count} style={{width:'100px'}} min='1' onChange={ (e) => {checkCount(e)} }/>
+                                        <input className='count-input' type='text' value={count} style={{width:'100px'}} onChange={ (e) => {checkCount(e)} }/>
                                         </div>      
                                     </div>
                                         : <p>품절</p>

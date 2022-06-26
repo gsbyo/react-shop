@@ -55,7 +55,11 @@ function Cart(){
         })
 
         await checkCart.forEach( p => {
-            if(p.id != id) delCheckCart.push(p);
+            if(p.id != id){
+                delCheckCart.push(p);
+            }else{
+                setTotalPrice(totalPrice - ((p.price - (p.price * p.discount / 100)) * p.count));
+            }
         })
        
         sessionStorage.setItem('cart', JSON.stringify(delCart));  
